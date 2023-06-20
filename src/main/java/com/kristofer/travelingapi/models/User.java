@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    @Id
     private String id;
     private String name;
     private String email;
@@ -15,8 +19,8 @@ public class User implements Serializable {
     private String at;
     //private List<Posts> fav = new ArrayList<>();
     // private List<Posts> likes = new ArrayList<>();
-    // private List<Posts> followers = new ArrayList<>();
-    // private List<Posts> following = new ArrayList<>();
+    private List<User> followers = new ArrayList<>();
+    private List<User> following = new ArrayList<>();
     // private List<Posts> posts = new ArrayList<>();
     // private List<Posts> configs = new ArrayList<>();
 
