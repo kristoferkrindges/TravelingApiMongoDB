@@ -1,17 +1,20 @@
 package com.kristofer.travelingapi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.kristofer.travelingapi.dto.UserDTO;
+import com.kristofer.travelingapi.dtos.UserDTO;
 import com.kristofer.travelingapi.models.User;
-import com.kristofer.travelingapi.service.UserService;
+import com.kristofer.travelingapi.services.UserService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,5 +32,46 @@ public class UserController {
         List<UserDTO> usersDTO = users.stream().map(x-> new UserDTO(x))
         .collect(Collectors.toList());
         return ResponseEntity.ok().body(usersDTO);
+    }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<UserDTO> findById(@PathVariable String id){
+        
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(new UserDTO(user));
+    }
+
+    @RequestMapping(method=RequestMethod.POST)
+    public ResponseEntity<String> register(@RequestBody User obj){
+        //Bcrypt
+        if(!this.verifyParams(obj).equals("pass")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .body(this.verifyParams(obj));
+        }else{
+            User user = new User(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
+            obj.getImgUrl(), obj.getAt());
+            obj = service.insert(user);
+            URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+            .buildAndExpand(obj.getId()).toUri();
+            return ResponseEntity.created(uri).build();
+        }
+        
+    }
+    public String verifyParams(User obj){
+        // Validations
+        // @Validation Email duplicated
+        if(obj.getName() == null){
+            return "Name: Name is required";
+        }
+        if(obj.getEmail() == null){
+            return "Email: Email is required";
+        }
+        if(obj.getPassword() == null){
+            return "Password: Password is required";
+        }
+        if(obj.getAt() == null){
+            return "At: At is required";
+        }
+        return "pass";
     }
 }
