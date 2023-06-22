@@ -19,8 +19,8 @@ public class User implements Serializable {
     private String at;
     //private List<Posts> fav = new ArrayList<>();
     // private List<Posts> likes = new ArrayList<>();
-    private List<User> followers = new ArrayList<>();
-    private List<User> following = new ArrayList<>();
+    private List<User> followers;
+    private List<User> following;
     // private List<Posts> posts = new ArrayList<>();
     // private List<Posts> configs = new ArrayList<>();
 
@@ -31,6 +31,8 @@ public class User implements Serializable {
         this.password = password;
         this.imgUrl = imgUrl;
         this.at = at;
+        this.followers = new ArrayList<>();
+        this.following = new ArrayList<>();
     }
 
     public User(){}
@@ -89,6 +91,22 @@ public class User implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(User following) {
+        this.following.add(following);
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(User followers) {
+        this.followers.add(followers);
     }
 
     @Override

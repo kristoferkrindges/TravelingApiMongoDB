@@ -1,4 +1,4 @@
-package com.kristofer.travelingapi.service.exception;
+package com.kristofer.travelingapi.services.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
     private static final long serialVersionUID = 1L;

@@ -7,7 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
 import com.kristofer.travelingapi.models.User;
-import com.kristofer.travelingapi.repository.UserRepository;
+import com.kristofer.travelingapi.repositories.UserRepository;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -25,6 +25,11 @@ public class Instantiation implements CommandLineRunner {
         "teste123", "photo.png", "@alex");
         User bob = new User(null, "Bob Grey", "bob@gmail.com", 
         "teste123", "photo.png", "@bob");
+
+        // maria.setFollowers(alex);
+        // alex.setFollowers(maria);
+        // bob.setFollowers(alex);
+        // bob.setFollowers(maria);
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
     }
