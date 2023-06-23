@@ -8,4 +8,6 @@ import com.kristofer.travelingapi.models.UserModel;
 @Repository
 public interface UserRepository extends MongoRepository<UserModel, String> {
     UserModel findByEmailContaining(String email);
+
+    UserModel findByAtContaining(String at);
 }
