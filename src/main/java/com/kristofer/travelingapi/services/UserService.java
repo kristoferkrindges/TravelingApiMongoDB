@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Service;
 
-import com.kristofer.travelingapi.models.User;
+import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.repositories.UserRepository;
 import com.kristofer.travelingapi.services.exceptions.ObjectNotFoundException;
 
@@ -19,20 +19,20 @@ public class UserService {
     @Autowired
     private UserRepository repo;
 
-    public List<User> findAll(){
+    public List<UserModel> findAll(){
         return repo.findAll();
     }
 
-    public User findById(String id){
-        Optional<User> obj = repo.findById(id);
+    public UserModel findById(String id){
+        Optional<UserModel> obj = repo.findById(id);
         return obj.orElseThrow(
             ()-> new ObjectNotFoundException("Object with id " + id + " not found"));
     }
-    public User insert(User obj){
+    public UserModel insert(UserModel obj){
         return repo.insert(obj);
     }
 
-    public User findByEmail(String email){
+    public UserModel findByEmail(String email){
         return repo.findByEmailContaining(email);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="user")
-public class User implements Serializable {
+public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -19,12 +19,12 @@ public class User implements Serializable {
     private String at;
     //private List<Posts> fav = new ArrayList<>();
     // private List<Posts> likes = new ArrayList<>();
-    private List<User> followers;
-    private List<User> following;
+    private List<UserModel> followers;
+    private List<UserModel> following;
     // private List<Posts> posts = new ArrayList<>();
     // private List<Posts> configs = new ArrayList<>();
 
-    public User(String id, String name, String email, String password, String imgUrl, String at) {
+    public UserModel(String id, String name, String email, String password, String imgUrl, String at) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -35,7 +35,7 @@ public class User implements Serializable {
         this.following = new ArrayList<>();
     }
 
-    public User(){}
+    public UserModel(){}
 
     public String getId() {
         return id;
@@ -93,19 +93,19 @@ public class User implements Serializable {
         return result;
     }
 
-    public List<User> getFollowing() {
+    public List<UserModel> getFollowing() {
         return following;
     }
 
-    public void setFollowing(User following) {
+    public void setFollowing(UserModel following) {
         this.following.add(following);
     }
 
-    public List<User> getFollowers() {
+    public List<UserModel> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(User followers) {
+    public void setFollowers(UserModel followers) {
         this.followers.add(followers);
     }
 
@@ -117,7 +117,7 @@ public class User implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        UserModel other = (UserModel) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

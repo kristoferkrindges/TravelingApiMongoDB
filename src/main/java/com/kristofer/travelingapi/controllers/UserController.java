@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kristofer.travelingapi.dtos.UserDTO;
-import com.kristofer.travelingapi.models.User;
+import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.services.UserService;
 
 import java.net.URI;
@@ -28,7 +28,7 @@ public class UserController {
     @RequestMapping(method=RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll(){
         
-        List<User> users = service.findAll();
+        List<UserModel> users = service.findAll();
         List<UserDTO> usersDTO = users.stream().map(x-> new UserDTO(x))
         .collect(Collectors.toList());
         return ResponseEntity.ok().body(usersDTO);
@@ -37,18 +37,18 @@ public class UserController {
     @RequestMapping(value="/{id}", method=RequestMethod.GET)
     public ResponseEntity<UserDTO> findById(@PathVariable String id){
         
-        User user = service.findById(id);
+        UserModel user = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user));
     }
 
     @RequestMapping(method=RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestBody User obj){
+    public ResponseEntity<String> register(@RequestBody UserModel obj){
         //Bcrypt
         if(!this.verifyParams(obj).equals("pass")){
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
             .body(this.verifyParams(obj));
         }else{
-            User user = new User(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
+            UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
             obj.getImgUrl(), obj.getAt());
             obj = service.insert(user);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -57,7 +57,7 @@ public class UserController {
         }
         
     }
-    public String verifyParams(User obj){
+    public String verifyParams(UserModel obj){
         // Validations
         // @Validation Email duplicated
         if(obj.getName() == null){
