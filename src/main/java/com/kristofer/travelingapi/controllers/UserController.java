@@ -50,13 +50,40 @@ public class UserController {
         }else{
             UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
             obj.getImgUrl(), obj.getAt());
-            obj = service.insert(user);
+            user = service.insert(user);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(obj.getId()).toUri();
             return ResponseEntity.created(uri).build();
+            // return ResponseEntity.ok().body("Token: asea4244842a81fa261");
         }
         
     }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<String> update(@RequestBody UserModel obj, 
+    @PathVariable String id){
+        //Bcrypt
+        if(!this.verifyParams(obj).equals("pass")){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+            .body(this.verifyParams(obj));
+        }else{
+            UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
+            obj.getImgUrl(), obj.getAt());
+            user.setId(id);
+            user = service.update(user);
+            return ResponseEntity.noContent().build();
+        }
+        
+    }
+
+    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable String id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    
+
     public String verifyParams(UserModel obj){
         // Validations
         // @Validation Email duplicated

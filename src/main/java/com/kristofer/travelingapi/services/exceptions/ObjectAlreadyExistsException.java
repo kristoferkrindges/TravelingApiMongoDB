@@ -1,9 +1,9 @@
 package com.kristofer.travelingapi.services.exceptions;
 
-public class ObjectAlreadyExists extends RuntimeException{
+public class ObjectAlreadyExistsException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
-    public ObjectAlreadyExists(String msg){
+    public ObjectAlreadyExistsException(String msg){
         super(msg);
     }
 }
