@@ -3,7 +3,7 @@ package com.kristofer.travelingapi.dtos;
 import java.io.Serializable;
 import java.util.List;
 
-import com.kristofer.travelingapi.models.User;
+import com.kristofer.travelingapi.models.UserModel;
 
 public class UserDTO implements Serializable{
     private static final long serialVersionUID = 1L;
@@ -12,11 +12,11 @@ public class UserDTO implements Serializable{
     private String name;
     private String imgUrl;
     private String at;
-    private List<User> followers;
-    private List<User> following;
+    private List<UserModel> followers;
+    private List<UserModel> following;
 
 
-    public UserDTO(User obj) {
+    public UserDTO(UserModel obj) {
         this.id = obj.getId();
         this.name = obj.getName();
         this.imgUrl = obj.getImgUrl();
@@ -29,19 +29,19 @@ public class UserDTO implements Serializable{
         
     }
 
-    public List<User> getFollowers() {
+    public List<UserModel> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(List<User> followers) {
+    public void setFollowers(List<UserModel> followers) {
         this.followers = followers;
     }
 
-    public List<User> getFollowing() {
+    public List<UserModel> getFollowing() {
         return following;
     }
 
-    public void setFollowing(List<User> following) {
+    public void setFollowing(List<UserModel> following) {
         this.following = following;
     }
 
