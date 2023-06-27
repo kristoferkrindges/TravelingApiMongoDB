@@ -52,7 +52,7 @@ public class UserService {
     private void updateData(UserModel newObj, UserModel obj) {
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
-        newObj.setImgUrl(obj.getImgUrl());
+        newObj.setPhoto(obj.getPhoto());
         newObj.setAt(obj.getAt());
     }
 

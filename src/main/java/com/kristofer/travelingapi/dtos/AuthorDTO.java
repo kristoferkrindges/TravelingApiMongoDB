@@ -1,82 +1,72 @@
 package com.kristofer.travelingapi.dtos;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import com.kristofer.travelingapi.models.UserModel;
 
-public class UserDTO implements Serializable{
+public class AuthorDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     
     private String id;
     private String name;
     private String photo;
-    private Date birthdate;
+    private String banner;
     private String at;
     private int followers;
     private int following;
 
+    public AuthorDTO(){
 
-    public UserDTO(UserModel obj) {
+    }
+    public AuthorDTO(UserModel obj){
         this.id = obj.getId();
         this.name = obj.getName();
         this.photo = obj.getPhoto();
+        this.banner = obj.getBanner();
         this.at = obj.getAt();
-        this.birthdate = obj.getBirthdate();
         this.followers = obj.lenghtFollowers();
         this.following = obj.lenghtFollowing();
     }
-
-    public UserDTO(){
-        
-    }
-    
-    public int getFollowers() {
-        return followers;
-    }
-
-    public int getFollowing() {
-        return following;
-    }
-
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public String getPhoto() {
-        return this.photo;
+        return photo;
     }
-
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-
+    public String getBanner() {
+        return banner;
+    }
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
     public String getAt() {
         return at;
     }
-
     public void setAt(String at) {
         this.at = at;
     }
-
-    public Date getBirthdate() {
-        return birthdate;
+    public int getFollowers() {
+        return followers;
     }
-
-    public void setBirthdate(Date birthdate) {
-        this.birthdate = birthdate;
+    public void setFollowers(int followers) {
+        this.followers = followers;
+    }
+    public int getFollowing() {
+        return following;
+    }
+    public void setFollowing(int following) {
+        this.following = following;
     }
 }

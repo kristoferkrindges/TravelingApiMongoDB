@@ -49,7 +49,7 @@ public class UserController {
             .body(this.verifyParams(obj));
         }else{
             UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
-            obj.getImgUrl(), obj.getAt());
+            obj.getPhoto(), obj.getAt(), obj.getBanner(), obj.getBirthdate());
             user = service.insert(user);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(obj.getId()).toUri();
@@ -67,9 +67,11 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
             .body(this.verifyParams(obj));
         }else{
-            UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
-            obj.getImgUrl(), obj.getAt());
-            user.setId(id);
+            UserModel user = service.findById(id);
+            user.setName(obj.getName());
+            user.setAt(obj.getAt());
+            user.setPhoto(obj.getPhoto());
+            user.setBirthdate(obj.getBirthdate());
             user = service.update(user);
             return ResponseEntity.noContent().build();
         }

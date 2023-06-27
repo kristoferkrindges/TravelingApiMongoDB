@@ -2,10 +2,14 @@ package com.kristofer.travelingapi.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.kristofer.travelingapi.dtos.AuthorDTO;
 
 @Document(collection="user")
 public class UserModel implements Serializable {
@@ -15,27 +19,58 @@ public class UserModel implements Serializable {
     private String name;
     private String email;
     private String password;
-    private String imgUrl;
+    private String photo;
+    private String banner;
     private String at;
-    //private List<Posts> fav = new ArrayList<>();
-    // private List<Posts> likes = new ArrayList<>();
-    private List<UserModel> followers;
-    private List<UserModel> following;
-    // private List<Posts> posts = new ArrayList<>();
-    // private List<Posts> configs = new ArrayList<>();
+    private Date birthdate;
 
-    public UserModel(String id, String name, String email, String password, String imgUrl, String at) {
+    private List<String> fav = new ArrayList<>();
+    private List<String> likes = new ArrayList<>();
+    private List<String> followers = new ArrayList<>();
+    private List<String> following = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<PostModel> posts = new ArrayList<>();
+
+    public UserModel(String id, String name, String email, String password, 
+    String photo, String at, String banner, Date birthdate) 
+    {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.birthdate = birthdate;
         this.password = password;
-        this.imgUrl = imgUrl;
+        this.photo = photo;
         this.at = at;
-        this.followers = new ArrayList<>();
-        this.following = new ArrayList<>();
+        this.banner = banner;
+    }
+
+    public UserModel(String id, String name, String email, String password, 
+    String photo, String at, String banner, List<String> followers, 
+    List<String> following, List<String> fav, List<String> likes , Date birthdate) 
+    {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.birthdate = birthdate;
+        this.password = password;
+        this.photo = photo;
+        this.at = at;
+        this.banner = banner;
+        this.followers = followers;
+        this.following = following;
+        this.fav = fav;
+        this.likes = likes;
     }
 
     public UserModel(){}
+
+    public int lenghtFollowers(){
+        return this.followers.size();
+    }
+
+    public int lenghtFollowing(){
+        return this.following.size();
+    }
 
     public String getId() {
         return id;
@@ -69,12 +104,12 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 
     public String getAt() {
@@ -85,28 +120,60 @@ public class UserModel implements Serializable {
         this.at = at;
     }
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
-    }
-
-    public List<UserModel> getFollowing() {
+    public List<String> getFollowing() {
         return following;
     }
 
-    public void setFollowing(UserModel following) {
+    public void setFollowing(String following) {
         this.following.add(following);
     }
 
-    public List<UserModel> getFollowers() {
+    public List<String> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(UserModel followers) {
+    public void setFollowers(String followers) {
         this.followers.add(followers);
+    }
+
+    public List<String> getFav() {
+        return fav;
+    }
+
+    public void setFav(List<String> fav) {
+        this.fav.add(at);
+    }
+
+    public List<String> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(String likes) {
+        this.likes.add(likes);
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
+    }
+
+    public Date getBirthdate() {
+        return birthdate;
+    }
+
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public List<PostModel> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<PostModel> posts) {
+        this.posts = posts;
     }
 
     @Override
@@ -124,6 +191,14 @@ public class UserModel implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
     }
 
 
