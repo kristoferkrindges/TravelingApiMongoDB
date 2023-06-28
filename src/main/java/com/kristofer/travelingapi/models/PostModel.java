@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.kristofer.travelingapi.dtos.AuthorDTO;
 
 @Document(collection="post")
 public class PostModel implements Serializable {
@@ -15,11 +18,12 @@ public class PostModel implements Serializable {
     private String id;
     private String phrase;
     private String img;
-    private List<String> likes;
-    private List<String> favs;
+    private List<UserModel> likes = new ArrayList<>();
+    private List<UserModel> favs = new ArrayList<>();
     private Date date;
-    //Reff
-    private String author;
+    //@DBRef(lazy = true)
+    private String authorId;
+    private AuthorDTO author;
 
     public PostModel(String id, String phrase, String img,  Date date, 
     String author) 
@@ -28,10 +32,8 @@ public class PostModel implements Serializable {
         this.id = id;
         this.phrase = phrase;
         this.img = img;
-        this.likes = new ArrayList<>();
-        this.favs = new ArrayList<>();
         this.date = date;
-        this.author = author;
+        this.authorId = author;
     }
 
     public PostModel(){
@@ -62,19 +64,19 @@ public class PostModel implements Serializable {
         this.img = img;
     }
 
-    public List<String> getLikes() {
+    public List<UserModel> getLikes() {
         return likes;
     }
 
-    public void setLikes(String likes) {
+    public void setLikes(UserModel likes) {
         this.likes.add(likes);
     }
 
-    public List<String> getFavs() {
+    public List<UserModel> getFavs() {
         return favs;
     }
 
-    public void setFavs(String favs) {
+    public void setFavs(UserModel favs) {
         this.favs.add(favs);
     }
 
@@ -86,11 +88,19 @@ public class PostModel implements Serializable {
         this.date = date;
     }
 
-    public String getAuthor() {
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String author) {
+        this.authorId = author;
+    }
+
+    public AuthorDTO getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(AuthorDTO author) {
         this.author = author;
     }
 

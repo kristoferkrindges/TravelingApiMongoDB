@@ -9,7 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.kristofer.travelingapi.dtos.AuthorDTO;
 
 @Document(collection="user")
 public class UserModel implements Serializable {
@@ -23,11 +22,14 @@ public class UserModel implements Serializable {
     private String banner;
     private String at;
     private Date birthdate;
-
-    private List<String> fav = new ArrayList<>();
-    private List<String> likes = new ArrayList<>();
-    private List<String> followers = new ArrayList<>();
-    private List<String> following = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<PostModel> fav = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<PostModel> likes = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<UserModel> followers = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<UserModel> following = new ArrayList<>();
     @DBRef(lazy = true)
     private List<PostModel> posts = new ArrayList<>();
 
@@ -44,22 +46,15 @@ public class UserModel implements Serializable {
         this.banner = banner;
     }
 
-    public UserModel(String id, String name, String email, String password, 
-    String photo, String at, String banner, List<String> followers, 
-    List<String> following, List<String> fav, List<String> likes , Date birthdate) 
-    {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.birthdate = birthdate;
-        this.password = password;
-        this.photo = photo;
-        this.at = at;
-        this.banner = banner;
-        this.followers = followers;
-        this.following = following;
-        this.fav = fav;
-        this.likes = likes;
+    public UserModel(UserModel obj){
+        this.id = obj.getId();
+        this.name = obj.getName();
+        this.email = obj.getEmail();
+        this.birthdate = obj.getBirthdate();
+        this.password = obj.getPassword();
+        this.photo = obj.getPhoto();
+        this.at = obj.getAt();
+        this.banner = obj.getBanner();
     }
 
     public UserModel(){}
@@ -120,35 +115,35 @@ public class UserModel implements Serializable {
         this.at = at;
     }
 
-    public List<String> getFollowing() {
+    public List<UserModel> getFollowing() {
         return following;
     }
 
-    public void setFollowing(String following) {
+    public void setFollowing(UserModel following) {
         this.following.add(following);
     }
 
-    public List<String> getFollowers() {
+    public List<UserModel> getFollowers() {
         return followers;
     }
 
-    public void setFollowers(String followers) {
+    public void setFollowers(UserModel followers) {
         this.followers.add(followers);
     }
 
-    public List<String> getFav() {
+    public List<PostModel> getFav() {
         return fav;
     }
 
-    public void setFav(List<String> fav) {
-        this.fav.add(at);
+    public void setFav(PostModel fav) {
+        this.fav.add(fav);
     }
 
-    public List<String> getLikes() {
+    public List<PostModel> getLikes() {
         return likes;
     }
 
-    public void setLikes(String likes) {
+    public void setLikes(PostModel likes) {
         this.likes.add(likes);
     }
 

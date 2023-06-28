@@ -2,7 +2,9 @@ package com.kristofer.travelingapi.dtos;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
 
 public class UserDTO implements Serializable{
@@ -15,7 +17,6 @@ public class UserDTO implements Serializable{
     private String at;
     private int followers;
     private int following;
-
 
     public UserDTO(UserModel obj) {
         this.id = obj.getId();
@@ -79,4 +80,5 @@ public class UserDTO implements Serializable{
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
     }
+
 }

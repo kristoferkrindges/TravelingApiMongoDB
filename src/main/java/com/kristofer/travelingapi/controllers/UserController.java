@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kristofer.travelingapi.dtos.UserDTO;
+import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.services.UserService;
 
@@ -48,8 +49,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
             .body(this.verifyParams(obj));
         }else{
-            UserModel user = new UserModel(obj.getId(),obj.getName(), obj.getEmail(), obj.getPassword(),
-            obj.getPhoto(), obj.getAt(), obj.getBanner(), obj.getBirthdate());
+            UserModel user = new UserModel(obj);
             user = service.insert(user);
             URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(obj.getId()).toUri();
@@ -84,6 +84,13 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
+    public ResponseEntity<List<PostModel>> findPosts(@PathVariable String id){
+        UserModel user = service.findById(id);
+        System.out.println(user.getPosts());
+        return ResponseEntity.ok().body(user.getPosts());
+    }
+
     
 
     public String verifyParams(UserModel obj){
@@ -100,6 +107,9 @@ public class UserController {
         }
         if(obj.getAt() == null){
             return "At: At is required";
+        }
+        if(obj.getBirthdate() == null){
+            return "Birthdate: Birthdate is required";
         }
         return "pass";
     }
