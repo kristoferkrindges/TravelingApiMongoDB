@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.repositories.UserRepository;
 import com.kristofer.travelingapi.services.exceptions.ObjectAlreadyExistsException;
@@ -52,8 +53,21 @@ public class UserService {
     private void updateData(UserModel newObj, UserModel obj) {
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
-        newObj.setImgUrl(obj.getImgUrl());
+        newObj.setPhoto(obj.getPhoto());
         newObj.setAt(obj.getAt());
+    }
+
+    public void addUserListPost(String id, PostModel obj){
+        UserModel user = this.findById(id);
+        user.getPosts().add(obj);
+        repo.save(user);
+    }
+
+    public void deletePostUser(String userId, PostModel post){
+        UserModel user = this.findById(userId);
+        System.out.println("Passou dps de procurar o id do user");
+        user.getPosts().remove(post);
+        repo.save(user);
     }
 
     private void verifyEmailExists(String email){
@@ -77,4 +91,5 @@ public class UserService {
     private UserModel findByAt(String at){
         return repo.findByAtContaining(at);
     }
+
 }
