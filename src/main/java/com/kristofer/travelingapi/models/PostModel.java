@@ -36,6 +36,14 @@ public class PostModel implements Serializable {
         this.authorId = author;
     }
 
+    public PostModel(PostModel obj){
+        this.id = obj.getId();
+        this.phrase = obj.getPhrase();
+        this.img = obj.getImg();
+        this.date = obj.getDate();
+        this.authorId = obj.getAuthorId();
+    }
+
     public PostModel(){
 
     }

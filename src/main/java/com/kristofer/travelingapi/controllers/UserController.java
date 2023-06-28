@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.kristofer.travelingapi.dtos.UserDTO;
 import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
+import com.kristofer.travelingapi.services.PostService;
 import com.kristofer.travelingapi.services.UserService;
 
 import java.net.URI;
@@ -25,6 +26,9 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private PostService servicePosts;
 
     @RequestMapping(method=RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll(){
@@ -80,8 +84,13 @@ public class UserController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable String id){
+        UserModel user = service.findById(id);
+        for(PostModel posts : user.getPosts()){
+            servicePosts.delete(posts.getId());
+        }
         service.delete(id);
         return ResponseEntity.noContent().build();
+
     }
 
     @RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
@@ -94,8 +103,6 @@ public class UserController {
     
 
     public String verifyParams(UserModel obj){
-        // Validations
-        // @Validation Email duplicated
         if(obj.getName() == null){
             return "Name: Name is required";
         }
