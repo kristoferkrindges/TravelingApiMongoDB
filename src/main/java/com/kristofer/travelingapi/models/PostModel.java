@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.kristofer.travelingapi.dtos.AuthorDTO;
@@ -18,8 +17,8 @@ public class PostModel implements Serializable {
     private String id;
     private String phrase;
     private String img;
-    private List<UserModel> likes = new ArrayList<>();
-    private List<UserModel> favs = new ArrayList<>();
+    private List<String> likes = new ArrayList<>();
+    private List<String> favs = new ArrayList<>();
     private Date date;
     //@DBRef(lazy = true)
     private String authorId;
@@ -72,19 +71,19 @@ public class PostModel implements Serializable {
         this.img = img;
     }
 
-    public List<UserModel> getLikes() {
+    public List<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(UserModel likes) {
+    public void setLikes(String likes) {
         this.likes.add(likes);
     }
 
-    public List<UserModel> getFavs() {
+    public List<String> getFavs() {
         return favs;
     }
 
-    public void setFavs(UserModel favs) {
+    public void setFavs(String favs) {
         this.favs.add(favs);
     }
 

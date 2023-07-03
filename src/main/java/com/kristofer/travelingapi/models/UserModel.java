@@ -32,6 +32,8 @@ public class UserModel implements Serializable {
     private List<UserModel> following = new ArrayList<>();
     @DBRef(lazy = true)
     private List<PostModel> posts = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<StorieModel> stories = new ArrayList<>();
 
     public UserModel(String id, String name, String email, String password, 
     String photo, String at, String banner, Date birthdate) 
@@ -169,6 +171,10 @@ public class UserModel implements Serializable {
 
     public void setPosts(List<PostModel> posts) {
         this.posts = posts;
+    }
+
+    public List<StorieModel> getStories() {
+        return stories;
     }
 
     @Override

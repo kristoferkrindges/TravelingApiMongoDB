@@ -12,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kristofer.travelingapi.dtos.UserDTO;
 import com.kristofer.travelingapi.models.PostModel;
+import com.kristofer.travelingapi.models.StorieModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.services.PostService;
 import com.kristofer.travelingapi.services.UserService;
@@ -96,8 +97,13 @@ public class UserController {
     @RequestMapping(value="/{id}/posts", method=RequestMethod.GET)
     public ResponseEntity<List<PostModel>> findPosts(@PathVariable String id){
         UserModel user = service.findById(id);
-        System.out.println(user.getPosts());
         return ResponseEntity.ok().body(user.getPosts());
+    }
+
+    @RequestMapping(value="/{id}/stories", method=RequestMethod.GET)
+    public ResponseEntity<List<StorieModel>> findStories(@PathVariable String id){
+        UserModel user = service.findById(id);
+        return ResponseEntity.ok().body(user.getStories());
     }
 
     
