@@ -18,7 +18,6 @@ import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.services.PostService;
 import com.kristofer.travelingapi.services.UserService;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController

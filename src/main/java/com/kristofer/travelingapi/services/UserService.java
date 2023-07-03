@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kristofer.travelingapi.models.PostModel;
+import com.kristofer.travelingapi.models.StorieModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.repositories.UserRepository;
 import com.kristofer.travelingapi.services.exceptions.ObjectAlreadyExistsException;
@@ -63,10 +64,21 @@ public class UserService {
         repo.save(user);
     }
 
+    public void addUserListStorie(String id, StorieModel obj){
+        UserModel user = this.findById(id);
+        user.getStories().add(obj);
+        repo.save(user);
+    }
+
     public void deletePostUser(String userId, PostModel post){
         UserModel user = this.findById(userId);
-        System.out.println("Passou dps de procurar o id do user");
         user.getPosts().remove(post);
+        repo.save(user);
+    }
+
+    public void deleteStorieUser(String userId, StorieModel storie){
+        UserModel user = this.findById(userId);
+        user.getStories().remove(storie);
         repo.save(user);
     }
 

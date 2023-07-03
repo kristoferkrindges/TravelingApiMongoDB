@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.repositories.PostRepository;
+import com.kristofer.travelingapi.repositories.StorieRepository;
 import com.kristofer.travelingapi.repositories.UserRepository;
 
 @Configuration
@@ -20,6 +21,8 @@ public class Instantiation implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private StorieRepository storieRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -27,6 +30,8 @@ public class Instantiation implements CommandLineRunner {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
         userRepository.deleteAll();
         postRepository.deleteAll();
+        storieRepository.deleteAll();
+
         
         UserModel maria = new UserModel(null, "Maria Brown", 
         "maria@gmail.com", "teste123", "photo.png", "@maria",
