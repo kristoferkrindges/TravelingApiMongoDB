@@ -14,6 +14,7 @@ public class AuthorDTO implements Serializable {
     private String at;
     private int followers;
     private int following;
+    private int posts;
 
     public AuthorDTO(){
 
@@ -26,6 +27,7 @@ public class AuthorDTO implements Serializable {
         this.at = obj.getAt();
         this.followers = obj.lenghtFollowers();
         this.following = obj.lenghtFollowing();
+        this.posts = obj.getPosts().size();
     }
     public String getId() {
         return id;
@@ -68,5 +70,12 @@ public class AuthorDTO implements Serializable {
     }
     public void setFollowing(int following) {
         this.following = following;
+    }
+
+    public int getPosts() {
+        return posts;
+    }
+    public void setPosts(int posts) {
+        this.posts = posts;
     }
 }

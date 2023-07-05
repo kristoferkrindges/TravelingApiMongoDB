@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.UserModel;
+import com.kristofer.travelingapi.repositories.CommentRepository;
 import com.kristofer.travelingapi.repositories.PostRepository;
 import com.kristofer.travelingapi.repositories.StorieRepository;
 import com.kristofer.travelingapi.repositories.UserRepository;
@@ -23,6 +24,8 @@ public class Instantiation implements CommandLineRunner {
     private PostRepository postRepository;
     @Autowired
     private StorieRepository storieRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,6 +34,7 @@ public class Instantiation implements CommandLineRunner {
         userRepository.deleteAll();
         postRepository.deleteAll();
         storieRepository.deleteAll();
+        commentRepository.deleteAll();
 
         
         UserModel maria = new UserModel(null, "Maria Brown", 

@@ -6,9 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import com.kristofer.travelingapi.dtos.AuthorDTO;
 
 @Document(collection="post")
 public class PostModel implements Serializable {
@@ -19,10 +18,10 @@ public class PostModel implements Serializable {
     private String img;
     private List<String> likes = new ArrayList<>();
     private List<String> favs = new ArrayList<>();
+    @DBRef(lazy = true)
+    private List<CommentModel> comments = new ArrayList<>();
     private Date date;
-    //@DBRef(lazy = true)
     private String authorId;
-    private AuthorDTO author;
 
     public PostModel(String id, String phrase, String img,  Date date, 
     String author) 
@@ -103,12 +102,12 @@ public class PostModel implements Serializable {
         this.authorId = author;
     }
 
-    public AuthorDTO getAuthor() {
-        return author;
+    public List<CommentModel> getComments() {
+        return comments;
     }
 
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
+    public void setComments(List<CommentModel> comments) {
+        this.comments = comments;
     }
 
     @Override
