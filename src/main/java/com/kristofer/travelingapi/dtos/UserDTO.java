@@ -14,6 +14,7 @@ public class UserDTO implements Serializable{
     private String at;
     private int followers;
     private int following;
+    private int posts;
 
     public UserDTO(UserModel obj) {
         this.id = obj.getId();
@@ -23,6 +24,7 @@ public class UserDTO implements Serializable{
         this.birthdate = obj.getBirthdate();
         this.followers = obj.lenghtFollowers();
         this.following = obj.lenghtFollowing();
+        this.posts = obj.getPosts().size();
     }
 
     public UserDTO(){
@@ -76,6 +78,14 @@ public class UserDTO implements Serializable{
 
     public void setBirthdate(Date birthdate) {
         this.birthdate = birthdate;
+    }
+
+    public int getPosts() {
+        return posts;
+    }
+
+    public void setPosts(int posts) {
+        this.posts = posts;
     }
 
 }

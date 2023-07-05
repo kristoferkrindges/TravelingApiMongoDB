@@ -9,8 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.kristofer.travelingapi.dtos.AuthorDTO;
-
 @Document(collection="post")
 public class PostModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -24,7 +22,6 @@ public class PostModel implements Serializable {
     private List<CommentModel> comments = new ArrayList<>();
     private Date date;
     private String authorId;
-    private AuthorDTO author;
 
     public PostModel(String id, String phrase, String img,  Date date, 
     String author) 
@@ -105,15 +102,7 @@ public class PostModel implements Serializable {
         this.authorId = author;
     }
 
-    public AuthorDTO getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
-    }
-
-     public List<CommentModel> getComments() {
+    public List<CommentModel> getComments() {
         return comments;
     }
 

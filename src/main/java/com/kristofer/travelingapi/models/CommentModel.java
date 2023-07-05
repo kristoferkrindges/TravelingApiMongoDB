@@ -9,8 +9,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.kristofer.travelingapi.dtos.AuthorDTO;
-
 @Document(collection = "comments")
 public class CommentModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,16 +21,13 @@ public class CommentModel implements Serializable {
     @DBRef(lazy = true)
     private List<RespondModel> respods = new ArrayList<>();
     private String authorId;
-    private AuthorDTO author;
     private String postId;
 
-    public CommentModel(String id, String pharase, Date datePost, List<String> likes, List<RespondModel> respods,
+    public CommentModel(String id, String pharase, Date datePost,
             String authorId, String postId) {
         this.id = id;
         this.pharase = pharase;
         this.datePost = datePost;
-        this.likes = likes;
-        this.respods = respods;
         this.authorId = authorId;
         this.postId = postId;
     }
@@ -103,14 +98,6 @@ public class CommentModel implements Serializable {
         this.authorId = authorId;
     }
 
-    public AuthorDTO getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(AuthorDTO author) {
-        this.author = author;
-    }
-
     public String getPostId() {
         return postId;
     }
@@ -129,7 +116,6 @@ public class CommentModel implements Serializable {
         result = prime * result + ((likes == null) ? 0 : likes.hashCode());
         result = prime * result + ((respods == null) ? 0 : respods.hashCode());
         result = prime * result + ((authorId == null) ? 0 : authorId.hashCode());
-        result = prime * result + ((author == null) ? 0 : author.hashCode());
         result = prime * result + ((postId == null) ? 0 : postId.hashCode());
         return result;
     }
@@ -172,11 +158,6 @@ public class CommentModel implements Serializable {
             if (other.authorId != null)
                 return false;
         } else if (!authorId.equals(other.authorId))
-            return false;
-        if (author == null) {
-            if (other.author != null)
-                return false;
-        } else if (!author.equals(other.author))
             return false;
         if (postId == null) {
             if (other.postId != null)

@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kristofer.travelingapi.models.CommentModel;
-import com.kristofer.travelingapi.models.PostModel;
 import com.kristofer.travelingapi.models.RespondModel;
-import com.kristofer.travelingapi.models.UserModel;
 import com.kristofer.travelingapi.repositories.CommentRepository;
 import com.kristofer.travelingapi.services.exceptions.ObjectNotFoundException;
 
@@ -41,8 +39,8 @@ public class CommentService {
         repo.deleteById(id);
     }
 
-    public void addRespondCommentList(String id, RespondModel obj){
-        CommentModel comment = this.findById(id);
+    public void addRespondCommentList(String commentId, RespondModel obj){
+        CommentModel comment = this.findById(commentId);
         comment.getRespods().add(obj);
         repo.save(comment);
     }
