@@ -2,16 +2,22 @@ package com.kristofer.travelingapi.models;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.kristofer.travelingapi.models.Enums.UserRole;
 
 
 @Document(collection="user")
-public class UserModel implements Serializable {
+public class UserModel implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
     @Id
     private String id;
@@ -22,6 +28,7 @@ public class UserModel implements Serializable {
     private String banner;
     private String at;
     private Date birthdate;
+    private UserRole role;
     @DBRef(lazy = true)
     private List<PostModel> fav = new ArrayList<>();
     @DBRef(lazy = true)
@@ -46,6 +53,7 @@ public class UserModel implements Serializable {
         this.photo = photo;
         this.at = at;
         this.banner = banner;
+        this.role = UserRole.ADMIN;
     }
 
     public UserModel(UserModel obj){
@@ -59,7 +67,27 @@ public class UserModel implements Serializable {
         this.banner = obj.getBanner();
     }
 
+    public UserModel(String email, String name, String at, UserRole role, Date birthdate, 
+    String password){
+        this.email = email;
+        this.name = name;
+        this.at = at;
+        this.role = role;
+        this.birthdate = birthdate;
+        this.password = password;
+        this.banner = "";
+        this.photo = "";
+    }
+
     public UserModel(){}
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
 
     public int lenghtFollowers(){
         return this.followers.size();
@@ -200,6 +228,38 @@ public class UserModel implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority
+        ("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
 
